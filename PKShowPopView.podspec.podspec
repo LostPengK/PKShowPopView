@@ -1,5 +1,5 @@
 #
-#  Be sure to run `pod spec lint PKShowPopView.podspec' to ensure this is a
+#  Be sure to run `pod spec lint PKShowPopView.podspec.podspec' to ensure this is a
 #  valid spec and to remove all comments including this before submitting the spec.
 #
 #  To learn more about Podspec attributes see https://docs.cocoapods.org/specification.html
@@ -15,16 +15,17 @@ Pod::Spec.new do |spec|
   #  summary should be tweet-length, and the description more in depth.
   #
 
-  spec.name         = "PKShowPopView"
+  spec.name         = "PKShowPopView.podspec"
   spec.version      = "0.0.1"
-  spec.summary      = "A light tool to pop view "
+  spec.summary      = "A light tool to show pop view. support a couple of stysles"
 
   # This description is used to generate tags and improve search results.
   #   * Think: What does it do? Why did you write it? What is the focus?
   #   * Try to keep it short, snappy and to the point.
   #   * Write the description between the DESC delimiters below.
   #   * Finally, don't worry about the indent, CocoaPods strips it!
-  spec.description  = "A light tool to pop view"
+  spec.description  = <<-DESC
+                   DESC
 
   spec.homepage     = "https://github.com/LostPengK/PKShowPopView"
   # spec.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
@@ -37,6 +38,7 @@ Pod::Spec.new do |spec|
   #  Popular ones are 'MIT', 'BSD' and 'Apache License, Version 2.0'.
   #
 
+  
   spec.license      = { :type => "MIT", :file => "FILE_LICENSE" }
 
 
@@ -51,9 +53,9 @@ Pod::Spec.new do |spec|
   #
 
   spec.author             = { "LostPengK" => "1039512009@qq.com" }
-  # Or just: spec.author    = ""
-  # spec.authors            = { "" => "" }
-  # spec.social_media_url   = "https://twitter.com/"
+  # Or just: spec.author    = "LostPengK"
+  # spec.authors            = { "LostPengK" => "1039512009@qq.com" }
+  # spec.social_media_url   = "https://twitter.com/LostPengK"
 
   # ――― Platform Specifics ――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #
@@ -88,7 +90,7 @@ Pod::Spec.new do |spec|
   #  Not including the public_header_files will make all headers public.
   #
 
-  spec.source_files  = "*.{h,m}"
+  spec.source_files  = "PopView/PKShowPopView/*.{h,m}"
   spec.exclude_files = "Classes/Exclude"
 
   # spec.public_header_files = "Classes/**/*.h"
