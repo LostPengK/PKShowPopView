@@ -306,7 +306,6 @@
     [UIView animateWithDuration:0.35 animations:^{
         self.contentView.frame = frame1;
     } completion:^(BOOL finished) {
-        
     }];
 }
 
