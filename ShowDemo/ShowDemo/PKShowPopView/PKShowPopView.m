@@ -51,7 +51,7 @@
     }
     
     [view addSubview:self];
-    
+    self.userInteractionEnabled = YES;
     self.frame = view.bounds;
     self.coverView.frame = view.bounds;
     
@@ -127,6 +127,12 @@
 
 #pragma mark addAutoLayoutContentView
 -(void)addAutoLayoutContentView{
+    
+    for (NSLayoutConstraint *constraint in self.constraints) {
+        if ([constraint.firstItem isEqual:_contentView]) {
+            [self removeConstraint:constraint];
+        }
+    }
     
     if (self.layoutPositon == PKAutoLayoutPosition_center){
         NSLayoutConstraint *consX = [NSLayoutConstraint constraintWithItem:_contentView  attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0];
