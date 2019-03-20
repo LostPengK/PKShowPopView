@@ -60,10 +60,10 @@
     PKShowPopView *pp = [[PKShowPopView alloc]init];
     pp.useAutoLayout = autolayout;
     pp.contentView = vv;
-    pp.backColor = [UIColor redColor];
+    pp.backColor = [UIColor blackColor];
     pp.showAnimationStyle = arc4random_uniform(100)%5;;
     pp.hideAnimationStyle = arc4random_uniform(100)%5;
-    
+    pp.backAlpha = 0.55;
     if (autolayout) {
         pp.layoutPositon = PKAutoLayoutPosition_center ;
     }

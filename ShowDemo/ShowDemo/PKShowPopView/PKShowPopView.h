@@ -73,7 +73,8 @@ typedef NS_OPTIONS(NSUInteger, PKAutoLayoutStyle) {
 
 //default is [UIColor whiteColor];
 @property(nonatomic,strong) UIColor *backColor;
-
+//default is 0.75;
+@property(nonatomic,assign) CGFloat backAlpha;
 //default is zero;
 @property(nonatomic,assign) UIEdgeInsets  contentViewInsets;
 

@@ -35,7 +35,7 @@
     self.hideAnimationStyle = PKHideAnimationStyle_Detafult;
     self.layoutPositon = PKAutoLayoutPosition_center;
     self.contentViewInsets = UIEdgeInsetsMake(0, 0, 0, 0);
-    
+    self.backAlpha = 0.75;
     [self addSubview:self.coverView];
 }
 
@@ -75,7 +75,7 @@
     }
     
     [UIView animateWithDuration:0.35 animations:^{
-        self.coverView.alpha =  0.75;
+        self.coverView.alpha =  self.backAlpha;
     } completion:^(BOOL finished) {
         if (self.showCompletionBlock) {
             self.showCompletionBlock();
@@ -359,7 +359,7 @@
 -(UIView *)coverView{
     if (!_coverView) {
         _coverView = [[UIView alloc]init];
-        _coverView.backgroundColor = [UIColor whiteColor];
+        _coverView.backgroundColor = [UIColor blackColor];
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapCoverView)];
         [_coverView addGestureRecognizer:tap];
     }
