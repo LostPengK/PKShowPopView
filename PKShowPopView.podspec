@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "PKShowPopView"
-  spec.version      = "0.0.3"
+  spec.version      = "0.0.4"
   spec.summary      = "a light base view to pop view"
 
   # This description is used to generate tags and improve search results.
