@@ -23,6 +23,8 @@
 
 @interface ViewController ()
 
+@property(nonatomic)PKShowPopView *popview;
+
 @end
 
 @implementation ViewController
@@ -57,30 +59,36 @@
     }
     
     
-    PKShowPopView *pp = [[PKShowPopView alloc]init];
-    pp.useAutoLayout = autolayout;
-    pp.contentView = vv;
-    pp.backColor = [UIColor blackColor];
-    pp.showAnimationStyle = arc4random_uniform(100)%5;;
-    pp.hideAnimationStyle = arc4random_uniform(100)%5;
-    pp.backAlpha = 0.55;
+    self.popview.contentView = vv;
     if (autolayout) {
-        pp.layoutPositon = PKAutoLayoutPosition_center ;
+        self.popview.layoutPositon = PKAutoLayoutPosition_center ;
     }
     
-    pp.contentViewInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+    self.popview.contentViewInsets = UIEdgeInsetsMake(0, 0, 0, 0);
     
-    [pp showOnView:self.view];
-    pp.showCompletionBlock = ^{
+    [self.popview showOnView:self.view];
+    self.popview.showCompletionBlock = ^{
         NSLog(@"showCompletionBlock===%@===%@",self.view.constraints,label.constraints);
     };
     
-    pp.hideCompletionBlock = ^{
+    self.popview.hideCompletionBlock = ^{
         
         NSLog(@"hideCompletionBlock,label.constraints===%@",label.constraints);
     };
 }
 
-
+-(PKShowPopView *)popview{
+    if (!_popview ) {
+        PKShowPopView *pp = [[PKShowPopView alloc]init];
+        pp.useAutoLayout = YES;
+        pp.backColor = [UIColor blackColor];
+        pp.showAnimationStyle = arc4random_uniform(100)%5;;
+        pp.hideAnimationStyle = arc4random_uniform(100)%5;
+        pp.backAlpha = 0.55;
+        _popview = pp;
+    }
+    
+    return _popview;
+}
 
 @end

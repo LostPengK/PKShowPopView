@@ -366,5 +366,15 @@
     return _coverView;
 }
 
+-(void)setContentView:(UIView *)contentView{
+
+    if ([_contentView isEqual:contentView]) {
+        return;
+    }
+    [_contentView removeFromSuperview];
+    _contentView = nil;
+    _contentView = contentView;
+
+}
 
 @end
