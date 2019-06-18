@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6B1DB949229B8F23007B27EB /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B1DB948229B8F23007B27EB /* BaseViewController.m */; };
+		6B1DB94E229BB4FA007B27EB /* TestTemplateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B1DB94D229BB4FA007B27EB /* TestTemplateViewController.m */; };
+		6B1DB953229BB8A7007B27EB /* IDETemplateMacros.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6B1DB952229BB8A7007B27EB /* IDETemplateMacros.plist */; };
+		6B1DB959229BBAE8007B27EB /* Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B1DB958229BBAE8007B27EB /* Test.m */; };
+		6B1DB95C229BBB67007B27EB /* BaseTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B1DB95B229BBB67007B27EB /* BaseTestViewController.m */; };
 		6B22950A22251D880007B9E2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B22950922251D880007B9E2 /* AppDelegate.m */; };
 		6B22950D22251D880007B9E2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B22950C22251D880007B9E2 /* ViewController.m */; };
 		6B22951022251D880007B9E2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B22950E22251D880007B9E2 /* Main.storyboard */; };
@@ -17,6 +22,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6B1DB947229B8F23007B27EB /* BaseViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
+		6B1DB948229B8F23007B27EB /* BaseViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
+		6B1DB94C229BB4FA007B27EB /* TestTemplateViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestTemplateViewController.h; sourceTree = "<group>"; };
+		6B1DB94D229BB4FA007B27EB /* TestTemplateViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestTemplateViewController.m; sourceTree = "<group>"; };
+		6B1DB952229BB8A7007B27EB /* IDETemplateMacros.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = IDETemplateMacros.plist; sourceTree = "<group>"; };
+		6B1DB957229BBAE8007B27EB /* Test.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Test.h; sourceTree = "<group>"; };
+		6B1DB958229BBAE8007B27EB /* Test.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Test.m; sourceTree = "<group>"; };
+		6B1DB95A229BBB67007B27EB /* BaseTestViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseTestViewController.h; sourceTree = "<group>"; };
+		6B1DB95B229BBB67007B27EB /* BaseTestViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaseTestViewController.m; sourceTree = "<group>"; };
 		6B22950522251D880007B9E2 /* ShowDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShowDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B22950822251D880007B9E2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		6B22950922251D880007B9E2 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -66,6 +80,15 @@
 				6B22950922251D880007B9E2 /* AppDelegate.m */,
 				6B22950B22251D880007B9E2 /* ViewController.h */,
 				6B22950C22251D880007B9E2 /* ViewController.m */,
+				6B1DB947229B8F23007B27EB /* BaseViewController.h */,
+				6B1DB948229B8F23007B27EB /* BaseViewController.m */,
+				6B1DB94C229BB4FA007B27EB /* TestTemplateViewController.h */,
+				6B1DB94D229BB4FA007B27EB /* TestTemplateViewController.m */,
+				6B1DB952229BB8A7007B27EB /* IDETemplateMacros.plist */,
+				6B1DB957229BBAE8007B27EB /* Test.h */,
+				6B1DB95A229BBB67007B27EB /* BaseTestViewController.h */,
+				6B1DB95B229BBB67007B27EB /* BaseTestViewController.m */,
+				6B1DB958229BBAE8007B27EB /* Test.m */,
 				6B22950E22251D880007B9E2 /* Main.storyboard */,
 				6B22951122251D8A0007B9E2 /* Assets.xcassets */,
 				6B22951322251D8A0007B9E2 /* LaunchScreen.storyboard */,
@@ -141,6 +164,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6B1DB953229BB8A7007B27EB /* IDETemplateMacros.plist in Resources */,
 				6B22951522251D8A0007B9E2 /* LaunchScreen.storyboard in Resources */,
 				6B22951222251D8A0007B9E2 /* Assets.xcassets in Resources */,
 				6B22951022251D880007B9E2 /* Main.storyboard in Resources */,
@@ -155,7 +179,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				6B22952122251DC60007B9E2 /* PKShowPopView.m in Sources */,
+				6B1DB959229BBAE8007B27EB /* Test.m in Sources */,
+				6B1DB949229B8F23007B27EB /* BaseViewController.m in Sources */,
+				6B1DB94E229BB4FA007B27EB /* TestTemplateViewController.m in Sources */,
 				6B22950D22251D880007B9E2 /* ViewController.m in Sources */,
+				6B1DB95C229BBB67007B27EB /* BaseTestViewController.m in Sources */,
 				6B22951822251D8A0007B9E2 /* main.m in Sources */,
 				6B22950A22251D880007B9E2 /* AppDelegate.m in Sources */,
 			);
@@ -300,14 +328,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = J6KU5RH9RK;
 				INFOPLIST_FILE = ShowDemo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.pengk.demo.ShowDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pengk.ShowDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -318,14 +346,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = J6KU5RH9RK;
 				INFOPLIST_FILE = ShowDemo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.pengk.demo.ShowDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pengk.ShowDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

@@ -34,6 +34,14 @@ typedef NS_OPTIONS(NSUInteger, PKAutoLayoutStyle) {
     PKAutoLayoutPosition_right = 1 << 4,
 };
 
+typedef enum : NSUInteger {
+    PKPanGestureRecognizerDirection_top = 1,
+    PKPanGestureRecognizerDirection_left = 2 ,
+    PKPanGestureRecognizerDirection_bottom = 3 ,
+    PKPanGestureRecognizerDirection_right = 4,
+} PKPanGestureRecognizerDirection;
+
+
 @interface PKShowPopView : UIView
 
 -(void)showOnView:(UIView *)view;
@@ -49,6 +57,9 @@ typedef NS_OPTIONS(NSUInteger, PKAutoLayoutStyle) {
 
 //animation group for contentview
 @property(nonatomic,strong) NSArray *animationArr;
+
+//duration default is 0.35
+@property(nonatomic,assign) float duration;
 
 //default is PKShowAnimationStyle_Detafult
 @property(nonatomic,assign) PKShowAnimationStyle showAnimationStyle;
@@ -75,7 +86,20 @@ typedef NS_OPTIONS(NSUInteger, PKAutoLayoutStyle) {
 @property(nonatomic,strong) UIColor *backColor;
 //default is 0.75;
 @property(nonatomic,assign) CGFloat backAlpha;
+
 //default is zero;
 @property(nonatomic,assign) UIEdgeInsets  contentViewInsets;
+
+//popview's Insets in superview. default is zero;
+@property(nonatomic,assign) UIEdgeInsets  popViewInsets;
+
+//enable user pan to hide contentview.default is NO. works only when allowUserPanContentView is YES
+@property(nonatomic,assign) BOOL  enablePanContentViewToHide;
+
+//PKPanGestureRecognizerDirection
+@property(nonatomic,assign) PKPanGestureRecognizerDirection  panDirection;
+
+// pan to hide min distance percent. less than this,content view will back to origin place,otherwise content will hide. default is 0.1;
+@property(nonatomic,assign) CGFloat panToHideMinPerecent;
 
 @end

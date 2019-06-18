@@ -8,12 +8,18 @@
 
 #import "PKShowPopView.h"
 
-@interface PKShowPopView()<CAAnimationDelegate>
+@interface PKShowPopView()<CAAnimationDelegate>{
+    CGPoint panBeginPoint;
+    BOOL userPaned;
+    CGFloat panedPercent;
+    UIPanGestureRecognizer *panGesture;
+}
 
 @property(nonatomic,strong) UIView *coverView;
 
 @property(nonatomic,assign) CGRect contentOriginFrame;
 
+@property(nonatomic,strong)UITapGestureRecognizer *contentTapGesture;
 
 @end
 
@@ -36,7 +42,12 @@
     self.layoutPositon = PKAutoLayoutPosition_center;
     self.contentViewInsets = UIEdgeInsetsMake(0, 0, 0, 0);
     self.backAlpha = 0.75;
+    self.duration = 0.35;
+    self.panToHideMinPerecent = 0.1;
+    
     [self addSubview:self.coverView];
+    
+    self.enablePanContentViewToHide = NO;
 }
 
 -(void)setBackColor:(UIColor *)backColor{
@@ -51,9 +62,12 @@
     }
     
     [view addSubview:self];
+    userPaned = NO;
+    panedPercent = 0;
     self.userInteractionEnabled = YES;
-    self.frame = view.bounds;
-    self.coverView.frame = view.bounds;
+    self.frame = UIEdgeInsetsInsetRect(view.bounds, self.popViewInsets);
+    self.coverView.frame = self.frame;
+    
     
     self.coverView.alpha = 0.0;
     [self.layer removeAllAnimations];
@@ -74,7 +88,7 @@
         [self showAnimation];
     }
     
-    [UIView animateWithDuration:0.35 animations:^{
+    [UIView animateWithDuration:self.duration animations:^{
         self.coverView.alpha =  self.backAlpha;
     } completion:^(BOOL finished) {
         if (self.showCompletionBlock) {
@@ -209,7 +223,7 @@
 
 -(CAAnimation *)defaultShowAnimation{
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
-    animation.duration = 0.25; // 动画持续时间
+    animation.duration = self.duration; // 动画持续时间
     animation.repeatCount = 1; // 重复次数
     animation.fromValue = [NSNumber numberWithFloat:0.001];
     animation.toValue = [NSNumber numberWithFloat:1.0];
@@ -227,7 +241,7 @@
     frame.origin.x = -frame.size.width;
     self.contentView.frame = frame;
     
-    [UIView animateWithDuration:0.35 animations:^{
+    [UIView animateWithDuration:self.duration animations:^{
         self.contentView.frame = frame1;
     } completion:^(BOOL finished) {
         
@@ -237,8 +251,8 @@
 -(void)hideToLeft{
     CGRect frame = self.contentView.frame;
     frame.origin.x = -frame.size.width;
-    
-    [UIView animateWithDuration:0.35 animations:^{
+    CGFloat hDuration = userPaned ? self.duration * (1-panedPercent) : self.duration;
+    [UIView animateWithDuration:hDuration animations:^{
         self.contentView.frame = frame;
     } completion:^(BOOL finished) {
         [self hide];
@@ -251,7 +265,7 @@
     frame.origin.x = self.frame.size.width;
     self.contentView.frame = frame;
     
-    [UIView animateWithDuration:0.35 animations:^{
+    [UIView animateWithDuration:self.duration animations:^{
         self.contentView.frame = frame1;
     } completion:^(BOOL finished) {
         
@@ -262,7 +276,8 @@
     CGRect frame = self.contentView.frame;
     frame.origin.x = self.frame.size.width;
     
-    [UIView animateWithDuration:0.35 animations:^{
+    CGFloat hDuration = userPaned ? self.duration * (1-panedPercent) : self.duration;
+    [UIView animateWithDuration:hDuration animations:^{
         self.contentView.frame = frame;
     } completion:^(BOOL finished) {
         [self hide];
@@ -276,7 +291,7 @@
     frame.origin.y = -frame.size.height;
     self.contentView.frame = frame;
     
-    [UIView animateWithDuration:0.35 animations:^{
+    [UIView animateWithDuration:self.duration animations:^{
         self.contentView.frame = frame1;
     } completion:^(BOOL finished) {
         
@@ -287,8 +302,8 @@
     
     CGRect frame = self.contentView.frame;
     frame.origin.y = -frame.size.height;
-    
-    [UIView animateWithDuration:0.35 animations:^{
+    CGFloat hDuration = userPaned ? self.duration * (1-panedPercent) : self.duration;
+    [UIView animateWithDuration:hDuration animations:^{
         self.contentView.frame = frame;
     } completion:^(BOOL finished) {
         [self hide];
@@ -303,7 +318,7 @@
     frame.origin.y = self.frame.size.height;
     self.contentView.frame = frame;
     
-    [UIView animateWithDuration:0.35 animations:^{
+    [UIView animateWithDuration:self.duration animations:^{
         self.contentView.frame = frame1;
     } completion:^(BOOL finished) {
     }];
@@ -312,8 +327,9 @@
 -(void)HideToBottom{
     CGRect frame = self.contentView.frame;
     frame.origin.y = self.frame.size.height;
-    
-    [UIView animateWithDuration:0.35 animations:^{
+    CGFloat hDuration = userPaned ? self.duration * (1-panedPercent) : self.duration;
+
+    [UIView animateWithDuration:hDuration animations:^{
         self.contentView.frame = frame;
         self.coverView.alpha =  0.0;
     } completion:^(BOOL finished) {
@@ -323,7 +339,7 @@
 
 -(CAAnimation *)defaultHideAnimation{
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
-    animation.duration = 0.25; // 动画持续时间
+    animation.duration = self.duration; // 动画持续时间
     animation.repeatCount = 1; // 重复次数
     animation.fromValue = [NSNumber numberWithFloat:1.0];
     animation.toValue = [NSNumber numberWithFloat:0.01];
@@ -346,6 +362,126 @@
     
 }
 
+#pragma mark gesture
+-(void)addPanGesture{
+    
+    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(panContentView:)];
+    [self addGestureRecognizer:pan];
+    panGesture = pan;
+    
+}
+
+-(void)panContentView:(UIPanGestureRecognizer *)gesture{
+    
+    if (!_enablePanContentViewToHide) {
+        return;
+    }
+
+    static CGFloat startX;
+    static CGFloat lastX;
+    static CGFloat startY;
+    static CGFloat lastY;
+    static CGFloat changeOffsetX;
+    static CGFloat changeOffsetY;
+    CGPoint touchPoint = [gesture locationInView:gesture.view];
+    
+    if (gesture.state == UIGestureRecognizerStateBegan){
+        startX = touchPoint.x;
+        lastX = touchPoint.x;
+        startY = touchPoint.y;
+        lastY = touchPoint.y;
+        
+        userPaned = YES;
+    }
+    
+    CGFloat alphaFactor = 0.0;
+    if (gesture.state == UIGestureRecognizerStateChanged){
+        CGFloat currentX = touchPoint.x;
+        changeOffsetX = currentX - lastX;
+        lastX = currentX;
+        
+        CGFloat currentY = touchPoint.y;
+        changeOffsetY = currentY - lastY;
+        lastY = currentY;
+        
+        CGFloat centerX = self.contentView.center.x ;
+        CGFloat centerY = self.contentView.center.y ;
+        
+        switch (_panDirection) {
+            case PKPanGestureRecognizerDirection_top:
+            {
+                centerY = self.contentView.center.y + changeOffsetY;
+                centerY = centerY <= CGRectGetMidY(_contentOriginFrame) ? centerY : self.contentView.center.y;
+            }
+                break;
+            case PKPanGestureRecognizerDirection_left:
+            {
+                centerX = self.contentView.center.x + changeOffsetX;
+                centerX = centerX <= CGRectGetMidX(_contentOriginFrame) ? centerX : self.contentView.center.x;
+            }
+                break;
+            case PKPanGestureRecognizerDirection_bottom:
+            {
+                centerY = self.contentView.center.y + changeOffsetY;
+                centerY = centerY > CGRectGetMidY(_contentOriginFrame) ? centerY : self.contentView.center.y;
+            }
+                break;
+            case PKPanGestureRecognizerDirection_right:
+            {
+                centerX = self.contentView.center.x + changeOffsetX;
+                centerX = centerX > CGRectGetMidX(_contentOriginFrame) ? centerX : self.contentView.center.x;
+            }
+                break;
+            default:
+                break;
+        }
+        
+        self.contentView.center = CGPointMake(centerX, centerY);
+        CGFloat offset = 0;
+        
+        if (_panDirection == PKPanGestureRecognizerDirection_top || _panDirection == PKPanGestureRecognizerDirection_bottom) {
+            offset = CGRectGetMidY(self.contentView.frame) - CGRectGetMidY(_contentOriginFrame);
+            panedPercent = fabs(offset/CGRectGetHeight(self.contentView.frame));
+            alphaFactor = 1- panedPercent;
+        }else if (_panDirection == PKPanGestureRecognizerDirection_left || _panDirection == PKPanGestureRecognizerDirection_right) {
+            offset = CGRectGetMidX(self.contentView.frame) - CGRectGetMidX(_contentOriginFrame);
+            panedPercent = fabs(offset/CGRectGetWidth(self.contentView.frame));
+            alphaFactor = 1- panedPercent;
+        }
+        CGFloat alpha = alphaFactor * self.backAlpha;
+        NSLog(@"alphaFactor===%f,alpha===%f",alphaFactor,alpha);
+        self.coverView.alpha = alpha;
+        
+//        self.duration = alphaFactor * self.duration;
+    }
+    
+    [gesture setTranslation:CGPointZero inView:self];
+    
+    if (gesture.state == UIGestureRecognizerStateCancelled || gesture.state == UIGestureRecognizerStateEnded) {
+        
+        CGFloat percent = 0.0;
+        if (_panDirection == PKPanGestureRecognizerDirection_top || _panDirection == PKPanGestureRecognizerDirection_bottom) {
+            percent = fabs(CGRectGetMidY(self.contentView.frame) - CGRectGetMidY(_contentOriginFrame))/CGRectGetHeight(_contentOriginFrame);
+        }else if (_panDirection == PKPanGestureRecognizerDirection_left || _panDirection == PKPanGestureRecognizerDirection_right) {
+            percent = fabs(CGRectGetMidX(self.contentView.frame) - CGRectGetMidX(_contentOriginFrame))/CGRectGetWidth(_contentOriginFrame);
+        }
+        
+        BOOL hide = percent >= self.panToHideMinPerecent ? YES : NO;
+        if (hide) {//计算剩余时间
+            [self hideContentView];
+        }else{//回到原始位置
+            [UIView animateWithDuration:self.duration animations:^{
+                self.contentView.frame = self.contentOriginFrame;
+                self.coverView.alpha = self.backAlpha;
+            }];
+        }
+        
+        userPaned = NO;
+        panedPercent = 0.0;
+    }
+}
+
+
 
 #pragma mark action
 -(void)tapCoverView{
@@ -353,6 +489,7 @@
         [self hideContentView];
     }
 }
+
 
 #pragma mark getter
 
@@ -368,13 +505,29 @@
 
 -(void)setContentView:(UIView *)contentView{
 
-    if ([_contentView isEqual:contentView]) {
-        return;
+    if (![_contentView isEqual:contentView]) {
+        [_contentView removeFromSuperview];
+        _contentView = nil;
+        _contentView = contentView;
     }
-    [_contentView removeFromSuperview];
-    _contentView = nil;
-    _contentView = contentView;
-
+    
+    if (_enablePanContentViewToHide) {
+        [self addPanGesture];
+    }
+    
 }
+
+-(void)setEnablePanContentViewToHide:(BOOL)enablePanContentViewToHide{
+    _enablePanContentViewToHide  = enablePanContentViewToHide;
+    
+    if (enablePanContentViewToHide) {
+        [self addPanGesture];
+    }else{
+        if (panGesture) {
+            [self removeGestureRecognizer:panGesture];
+        }
+    }
+}
+
 
 @end

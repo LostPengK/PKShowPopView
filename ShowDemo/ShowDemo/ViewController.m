@@ -16,7 +16,8 @@
 @implementation NView
 
 -(CGSize)intrinsicContentSize{
-    return CGSizeMake(100, 100);
+    return CGSizeMake([UIApplication sharedApplication].keyWindow.frame.size.width, [UIApplication sharedApplication].keyWindow.frame.size.height/2.0);
+//    return CGSizeMake([UIApplication sharedApplication].keyWindow.frame.size.width/2.0, UIViewNoIntrinsicMetric );
 }
 
 @end
@@ -47,7 +48,7 @@
 -(void)showLabelAutolayout:(BOOL)autolayout{
     UILabel *label = [UILabel new];
     label.numberOfLines = 0;
-    label.text = @"labelNSLayoutConstraintNSLayoutConstraintNSLayoutConstraintNSLayoutConstraintNSLayoutConstraintNSLayoutConstraintlabelNSLayoutConstraintNSLayoutConstraintNSLayoutConstraintNSLayoutConstraintNSLayoutConstraintNSLayoutConstraint";
+    label.text = @"春花秋月何时了，\n往事知多少,\n小楼昨夜又东风。\n雕栏玉砌应犹在，\n只是朱颜改。\n问君能有几多愁m，\n恰似一江春水向东流。";
     label.textColor = [UIColor redColor];
     label.backgroundColor = [UIColor blackColor];
     label.preferredMaxLayoutWidth = 300;
@@ -58,22 +59,19 @@
         vv.frame = CGRectMake(100, 100, 100, 100);
     }
     
-    
     self.popview.contentView = vv;
     if (autolayout) {
-        self.popview.layoutPositon = PKAutoLayoutPosition_center ;
+        self.popview.layoutPositon = PKAutoLayoutPosition_left|PKAutoLayoutPosition_right|PKAutoLayoutPosition_bottom ;
     }
     
-    self.popview.contentViewInsets = UIEdgeInsetsMake(0, 0, 0, 0);
-    
+//    self.popview.contentViewInsets = UIEdgeInsetsMake(self.view.frame.size.height/2.0, 0, 0, 0);
+//    self.popview.popViewInsets  = UIEdgeInsetsMake(0, 0, 50, 0);
     [self.popview showOnView:self.view];
     self.popview.showCompletionBlock = ^{
-        NSLog(@"showCompletionBlock===%@===%@",self.view.constraints,label.constraints);
+        
     };
     
     self.popview.hideCompletionBlock = ^{
-        
-        NSLog(@"hideCompletionBlock,label.constraints===%@",label.constraints);
     };
 }
 
@@ -82,9 +80,13 @@
         PKShowPopView *pp = [[PKShowPopView alloc]init];
         pp.useAutoLayout = YES;
         pp.backColor = [UIColor blackColor];
-        pp.showAnimationStyle = arc4random_uniform(100)%5;;
-        pp.hideAnimationStyle = arc4random_uniform(100)%5;
-        pp.backAlpha = 0.55;
+        pp.showAnimationStyle = PKShowAnimationStyle_fromBottom;// arc4random_uniform(100)%5;;
+        pp.hideAnimationStyle = PKHideAnimationStyle_toBottom;//arc4random_uniform(100)%5;
+        pp.backAlpha = 0.75;
+        pp.userTouchActionEnable = YES;
+        pp.enablePanContentViewToHide = YES;
+        pp.duration = 0.35;
+        pp.panDirection = PKPanGestureRecognizerDirection_bottom;
         _popview = pp;
     }
     
