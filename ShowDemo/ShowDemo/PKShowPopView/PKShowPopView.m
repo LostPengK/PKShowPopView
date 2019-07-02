@@ -66,8 +66,7 @@
     panedPercent = 0;
     self.userInteractionEnabled = YES;
     self.frame = UIEdgeInsetsInsetRect(view.bounds, self.popViewInsets);
-    self.coverView.frame = self.frame;
-    
+    self.coverView.frame = UIEdgeInsetsInsetRect(view.bounds, self.contentViewInsets);
     
     self.coverView.alpha = 0.0;
     [self.layer removeAllAnimations];
@@ -151,33 +150,33 @@
     if (self.layoutPositon == PKAutoLayoutPosition_center){
         NSLayoutConstraint *consX = [NSLayoutConstraint constraintWithItem:_contentView  attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0];
         NSLayoutConstraint *conY = [NSLayoutConstraint constraintWithItem:_contentView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0];
-        NSLayoutConstraint *consLeft = [NSLayoutConstraint constraintWithItem:_contentView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationGreaterThanOrEqual toItem:self attribute:NSLayoutAttributeLeft multiplier:1.0 constant:self.contentViewInsets.left];
-        NSLayoutConstraint *consRight = [NSLayoutConstraint constraintWithItem:_contentView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationLessThanOrEqual toItem:self attribute:NSLayoutAttributeRight multiplier:1.0 constant:-self.contentViewInsets.right];
-        NSLayoutConstraint *consTop = [NSLayoutConstraint constraintWithItem:_contentView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationGreaterThanOrEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1.0 constant:self.contentViewInsets.top];
-        NSLayoutConstraint *consBottom = [NSLayoutConstraint constraintWithItem:_contentView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationLessThanOrEqual toItem:self attribute:NSLayoutAttributeBottom multiplier:1.0 constant:-self.contentViewInsets.bottom];
+        NSLayoutConstraint *consLeft = [NSLayoutConstraint constraintWithItem:_contentView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationGreaterThanOrEqual toItem:self attribute:NSLayoutAttributeLeft multiplier:1.0 constant:self.popViewInsets.left];
+        NSLayoutConstraint *consRight = [NSLayoutConstraint constraintWithItem:_contentView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationLessThanOrEqual toItem:self attribute:NSLayoutAttributeRight multiplier:1.0 constant:-self.popViewInsets.right];
+        NSLayoutConstraint *consTop = [NSLayoutConstraint constraintWithItem:_contentView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationGreaterThanOrEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1.0 constant:self.popViewInsets.top];
+        NSLayoutConstraint *consBottom = [NSLayoutConstraint constraintWithItem:_contentView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationLessThanOrEqual toItem:self attribute:NSLayoutAttributeBottom multiplier:1.0 constant:-self.popViewInsets.bottom];
         consBottom.priority = UILayoutPriorityDefaultLow;
         [self addConstraints:@[consLeft,consRight,consTop,consBottom]];
         [self addConstraints:@[consX,conY]];
     }
     
     if (self.layoutPositon & PKAutoLayoutPosition_top) {
-        NSLayoutConstraint *consTop = [NSLayoutConstraint constraintWithItem:_contentView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationGreaterThanOrEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1.0 constant:self.contentViewInsets.top];
+        NSLayoutConstraint *consTop = [NSLayoutConstraint constraintWithItem:_contentView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationGreaterThanOrEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1.0 constant:self.popViewInsets.top];
         [self addConstraint:consTop];
         
     }
     
     if (self.layoutPositon & PKAutoLayoutPosition_left) {
-        NSLayoutConstraint *consLeft = [NSLayoutConstraint constraintWithItem:_contentView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationGreaterThanOrEqual toItem:self attribute:NSLayoutAttributeLeft multiplier:1.0 constant:self.contentViewInsets.left];
+        NSLayoutConstraint *consLeft = [NSLayoutConstraint constraintWithItem:_contentView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationGreaterThanOrEqual toItem:self attribute:NSLayoutAttributeLeft multiplier:1.0 constant:self.popViewInsets.left];
         [self addConstraint:consLeft];
     }
     
     if (self.layoutPositon & PKAutoLayoutPosition_bottom) {
-        NSLayoutConstraint *consBottom = [NSLayoutConstraint constraintWithItem:_contentView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationLessThanOrEqual toItem:self attribute:NSLayoutAttributeBottom multiplier:1.0 constant:-self.contentViewInsets.bottom];
+        NSLayoutConstraint *consBottom = [NSLayoutConstraint constraintWithItem:_contentView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationLessThanOrEqual toItem:self attribute:NSLayoutAttributeBottom multiplier:1.0 constant:-self.popViewInsets.bottom];
         [self addConstraint:consBottom];
     }
     
     if (self.layoutPositon & PKAutoLayoutPosition_right) {
-        NSLayoutConstraint *consRight = [NSLayoutConstraint constraintWithItem:_contentView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationLessThanOrEqual toItem:self attribute:NSLayoutAttributeRight multiplier:1.0 constant:-self.contentViewInsets.right];
+        NSLayoutConstraint *consRight = [NSLayoutConstraint constraintWithItem:_contentView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationLessThanOrEqual toItem:self attribute:NSLayoutAttributeRight multiplier:1.0 constant:-self.popViewInsets.right];
         [self addConstraint:consRight];
     }
     

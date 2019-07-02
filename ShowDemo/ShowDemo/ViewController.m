@@ -16,7 +16,7 @@
 @implementation NView
 
 -(CGSize)intrinsicContentSize{
-    return CGSizeMake([UIApplication sharedApplication].keyWindow.frame.size.width/2.0, [UIApplication sharedApplication].keyWindow.frame.size.height);
+    return CGSizeMake([UIApplication sharedApplication].keyWindow.frame.size.width, [UIApplication sharedApplication].keyWindow.frame.size.height/2.0);
 //    return CGSizeMake([UIApplication sharedApplication].keyWindow.frame.size.width/2.0, UIViewNoIntrinsicMetric );
 }
 
@@ -64,9 +64,9 @@
         self.popview.layoutPositon = PKAutoLayoutPosition_right|PKAutoLayoutPosition_top|PKAutoLayoutPosition_bottom ;
     }
     
-//    self.popview.contentViewInsets = UIEdgeInsetsMake(self.view.frame.size.height/2.0, 0, 0, 0);
-//    self.popview.popViewInsets  = UIEdgeInsetsMake(0, 0, 50, 0);
-    [self.popview showOnView:self.view];
+    self.popview.contentViewInsets = UIEdgeInsetsMake(100, 0, 0, 0);
+//    self.popview.popViewInsets  = UIEdgeInsetsMake(30, 0, 0, 0);
+    [self.popview showOnView:[UIApplication sharedApplication].keyWindow];
     self.popview.showCompletionBlock = ^{
         
     };
@@ -80,13 +80,13 @@
         PKShowPopView *pp = [[PKShowPopView alloc]init];
         pp.useAutoLayout = YES;
         pp.backColor = [UIColor blackColor];
-        pp.showAnimationStyle = PKShowAnimationStyle_fromRight;// arc4random_uniform(100)%5;;
-        pp.hideAnimationStyle = PKHideAnimationStyle_toRight;//arc4random_uniform(100)%5;
+        pp.showAnimationStyle = PKShowAnimationStyle_fromBottom;// arc4random_uniform(100)%5;;
+        pp.hideAnimationStyle = PKHideAnimationStyle_toBottom;//arc4random_uniform(100)%5;
         pp.backAlpha = 0.75;
         pp.userTouchActionEnable = YES;
         pp.enablePanContentViewToHide = YES;
         pp.duration = 0.35;
-        pp.panDirection = PKPanGestureRecognizerDirection_right;
+        pp.panDirection = PKPanGestureRecognizerDirection_bottom;
         _popview = pp;
     }
     
