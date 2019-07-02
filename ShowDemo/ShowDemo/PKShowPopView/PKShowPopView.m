@@ -254,6 +254,7 @@
     CGFloat hDuration = userPaned ? self.duration * (1-panedPercent) : self.duration;
     [UIView animateWithDuration:hDuration animations:^{
         self.contentView.frame = frame;
+        self.coverView.alpha =  0.0;
     } completion:^(BOOL finished) {
         [self hide];
     }];
@@ -279,6 +280,7 @@
     CGFloat hDuration = userPaned ? self.duration * (1-panedPercent) : self.duration;
     [UIView animateWithDuration:hDuration animations:^{
         self.contentView.frame = frame;
+        self.coverView.alpha =  0.0;
     } completion:^(BOOL finished) {
         [self hide];
     }];
@@ -305,6 +307,7 @@
     CGFloat hDuration = userPaned ? self.duration * (1-panedPercent) : self.duration;
     [UIView animateWithDuration:hDuration animations:^{
         self.contentView.frame = frame;
+        self.coverView.alpha =  0.0;
     } completion:^(BOOL finished) {
         [self hide];
     }];
