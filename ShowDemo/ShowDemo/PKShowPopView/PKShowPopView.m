@@ -20,7 +20,7 @@
 @property(nonatomic,assign) CGRect contentOriginFrame;
 
 @property(nonatomic,strong)UITapGestureRecognizer *contentTapGesture;
-
+@property(nonatomic,strong)PKShowPopConfig *popConfig;
 @end
 
 @implementation PKShowPopView
@@ -34,20 +34,24 @@
 }
 
 -(void)_setSubview{
-    self.userTouchActionEnable = YES;
-    self.addHideAnimation = YES;
-    self.addShowAnimation = YES;
-    self.showAnimationStyle = PKShowAnimationStyle_Detafult;
-    self.hideAnimationStyle = PKHideAnimationStyle_Detafult;
-    self.layoutPositon = PKAutoLayoutPosition_center;
-    self.contentViewInsets = UIEdgeInsetsMake(0, 0, 0, 0);
-    self.backAlpha = 0.75;
-    self.duration = 0.35;
-    self.panToHideMinPerecent = 0.1;
+    
+    self.popConfig = [PKShowPopConfig shareInstance];
+    
+    self.userTouchActionEnable = self.popConfig.userTouchActionEnable;
+    self.addHideAnimation = self.popConfig.addHideAnimation;
+    self.addShowAnimation = self.popConfig.addShowAnimation;
+    self.showAnimationStyle = self.popConfig.showAnimationStyle;
+    self.hideAnimationStyle = self.popConfig.hideAnimationStyle;
+    self.layoutPositon = self.popConfig.layoutPositon;
+    self.contentViewInsets = self.popConfig.contentViewInsets;
+    self.backColor = self.popConfig.backColor;
+    self.backAlpha = self.popConfig.backAlpha;
+    self.duration = self.popConfig.duration;
+    self.panToHideMinPerecent = self.popConfig.panToHideMinPerecent;
     
     [self addSubview:self.coverView];
     
-    self.enablePanContentViewToHide = NO;
+    self.enablePanContentViewToHide =  self.popConfig.enablePanContentViewToHide;
 }
 
 -(void)setBackColor:(UIColor *)backColor{
@@ -66,7 +70,7 @@
     panedPercent = 0;
     self.userInteractionEnabled = YES;
     self.frame = UIEdgeInsetsInsetRect(view.bounds, self.popViewInsets);
-    self.coverView.frame = UIEdgeInsetsInsetRect(view.bounds, self.contentViewInsets);
+    self.coverView.frame = UIEdgeInsetsInsetRect(self.bounds, self.contentViewInsets);
     
     self.coverView.alpha = 0.0;
     [self.layer removeAllAnimations];
@@ -103,6 +107,12 @@
         switch (self.hideAnimationStyle) {
             case PKHideAnimationStyle_Detafult:{
                 [self.contentView.layer addAnimation:[self defaultHideAnimation] forKey:@"scale-layer-hide"];
+                CGFloat hDuration = userPaned ? self.duration * (1-panedPercent) : self.duration;
+                [UIView animateWithDuration:hDuration animations:^{
+                    self.coverView.alpha =  0.0;
+                } completion:^(BOOL finished) {
+                    [self hide];
+                }];
             }
                 break;
             case PKHideAnimationStyle_toBottom:{
@@ -531,5 +541,49 @@
     }
 }
 
+@end
+
+@implementation PKShowPopConfig
+
++(PKShowPopConfig *)shareInstance{
+    static PKShowPopConfig *shareInstance;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        shareInstance = [[PKShowPopConfig alloc] init];
+    });
+    return shareInstance;
+}
+
+-(instancetype)init{
+    self = [super init];
+    if (self) {
+        [self initData];
+    }
+    
+    return self;
+}
+
+-(void)initData{
+    self.userTouchActionEnable = YES;
+    self.addHideAnimation = YES;
+    self.addShowAnimation = YES;
+    self.showAnimationStyle = PKShowAnimationStyle_Detafult;
+    self.hideAnimationStyle = PKHideAnimationStyle_Detafult;
+    self.layoutPositon = PKAutoLayoutPosition_center;
+    self.contentViewInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+    self.popViewInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+    self.backAlpha = 0.75;
+    self.backColor = [UIColor blackColor];
+    self.duration = 0.35;
+    self.panToHideMinPerecent = 0.1;
+    self.enablePanContentViewToHide = NO;
+    self.useAutoLayout = NO;
+}
+
+-(void)makeConfig:(void (^)(PKShowPopConfig *make))config{
+    if (config) {
+        config(self);
+    }
+}
 
 @end

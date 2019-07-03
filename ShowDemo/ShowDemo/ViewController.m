@@ -32,6 +32,19 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    //gloable config
+    //method 1
+    [PKShowPopConfig shareInstance].backColor = [UIColor redColor];
+    [PKShowPopConfig shareInstance].duration = 0.3;
+    
+    //method 2
+    [[PKShowPopConfig shareInstance] makeConfig:^(PKShowPopConfig *make) {
+        make.duration = 0.2;
+        make.backColor = [UIColor redColor];
+    }];
+    
+    
     // Do any additional setup after loading the view, typically from a nib.
 }
 
@@ -61,11 +74,12 @@
     
     self.popview.contentView = vv;
     if (autolayout) {
+        self.popview.useAutoLayout = YES;
         self.popview.layoutPositon = PKAutoLayoutPosition_right|PKAutoLayoutPosition_top|PKAutoLayoutPosition_bottom ;
     }
     
-    self.popview.contentViewInsets = UIEdgeInsetsMake(100, 0, 0, 0);
-//    self.popview.popViewInsets  = UIEdgeInsetsMake(30, 0, 0, 0);
+//    self.popview.contentViewInsets = UIEdgeInsetsMake(100, 20, 20, 20);
+    self.popview.popViewInsets  = UIEdgeInsetsMake(30, 0, 0, 0);
     [self.popview showOnView:[UIApplication sharedApplication].keyWindow];
     self.popview.showCompletionBlock = ^{
         
@@ -78,15 +92,15 @@
 -(PKShowPopView *)popview{
     if (!_popview ) {
         PKShowPopView *pp = [[PKShowPopView alloc]init];
-        pp.useAutoLayout = YES;
-        pp.backColor = [UIColor blackColor];
-        pp.showAnimationStyle = PKShowAnimationStyle_fromBottom;// arc4random_uniform(100)%5;;
-        pp.hideAnimationStyle = PKHideAnimationStyle_toBottom;//arc4random_uniform(100)%5;
-        pp.backAlpha = 0.75;
-        pp.userTouchActionEnable = YES;
-        pp.enablePanContentViewToHide = YES;
-        pp.duration = 0.35;
-        pp.panDirection = PKPanGestureRecognizerDirection_bottom;
+//        pp.useAutoLayout = YES;
+//        pp.backColor = [UIColor blackColor];
+//        pp.showAnimationStyle = PKShowAnimationStyle_fromBottom;// arc4random_uniform(100)%5;;
+//        pp.hideAnimationStyle = PKHideAnimationStyle_toBottom;//arc4random_uniform(100)%5;
+//        pp.backAlpha = 0.75;
+//        pp.userTouchActionEnable = YES;
+//        pp.enablePanContentViewToHide = YES;
+//        pp.duration = 0.35;
+//        pp.panDirection = PKPanGestureRecognizerDirection_bottom;
         _popview = pp;
     }
     

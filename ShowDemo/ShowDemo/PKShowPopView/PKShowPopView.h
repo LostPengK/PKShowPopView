@@ -103,3 +103,54 @@ typedef enum : NSUInteger {
 @property(nonatomic,assign) CGFloat panToHideMinPerecent;
 
 @end
+
+
+@interface PKShowPopConfig : NSObject
+
++(PKShowPopConfig *)shareInstance;
+
+//duration default is 0.35
+@property(nonatomic,assign) float duration;
+
+//default is PKShowAnimationStyle_Detafult
+@property(nonatomic,assign) PKShowAnimationStyle showAnimationStyle;
+
+//default is PKHideAnimationStyle_Detafult
+@property(nonatomic,assign) PKHideAnimationStyle hideAnimationStyle;
+
+//default is YES
+@property(nonatomic,assign) BOOL userTouchActionEnable;
+
+//default is YES
+@property(nonatomic,assign) BOOL addShowAnimation;
+
+//default is YES
+@property(nonatomic,assign) BOOL addHideAnimation;
+
+//default is NO
+@property(nonatomic,assign) BOOL useAutoLayout;
+
+//default is AutoLayoutPositon_center
+@property(nonatomic,assign) PKAutoLayoutStyle layoutPositon;
+
+//default is [UIColor whiteColor];
+@property(nonatomic,strong) UIColor *backColor;
+//default is 0.75;
+@property(nonatomic,assign) CGFloat backAlpha;
+
+//default is zero;
+@property(nonatomic,assign) UIEdgeInsets  contentViewInsets;
+
+//popview's Insets in superview. default is zero;
+@property(nonatomic,assign) UIEdgeInsets  popViewInsets;
+
+//enable user pan to hide contentview.default is NO. works only when allowUserPanContentView is YES
+@property(nonatomic,assign) BOOL  enablePanContentViewToHide;
+
+// pan to hide min distance percent. less than this,content view will back to origin place,otherwise content will hide. default is 0.1;
+@property(nonatomic,assign) CGFloat panToHideMinPerecent;
+
+-(void)makeConfig:( void (^)(PKShowPopConfig *make))config;
+
+@end
+
