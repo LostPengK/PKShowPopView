@@ -82,7 +82,7 @@ typedef enum : NSUInteger {
 //default is AutoLayoutPositon_center
 @property(nonatomic,assign) PKAutoLayoutStyle layoutPositon;
 
-//default is [UIColor whiteColor];
+//default is [UIColor blackColor];
 @property(nonatomic,strong) UIColor *backColor;
 //default is 0.75;
 @property(nonatomic,assign) CGFloat backAlpha;
@@ -133,7 +133,7 @@ typedef enum : NSUInteger {
 //default is AutoLayoutPositon_center
 @property(nonatomic,assign) PKAutoLayoutStyle layoutPositon;
 
-//default is [UIColor whiteColor];
+//default is [UIColor blackColor];
 @property(nonatomic,strong) UIColor *backColor;
 //default is 0.75;
 @property(nonatomic,assign) CGFloat backAlpha;
