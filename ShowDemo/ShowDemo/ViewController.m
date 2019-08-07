@@ -25,7 +25,7 @@
 @interface ViewController ()
 
 @property(nonatomic)PKShowPopView *popview;
-
+@property(nonatomic)NView *vv;
 @end
 
 @implementation ViewController
@@ -44,7 +44,9 @@
         make.backColor = [UIColor redColor];
     }];
     
-    
+    self.vv = [NView new];
+    self.vv.backgroundColor = [UIColor yellowColor];
+    self.vv.frame = CGRectMake(0, self.view.frame.size.height - 200, self.view.frame.size.width, 200);
     // Do any additional setup after loading the view, typically from a nib.
 }
 
@@ -59,6 +61,7 @@
 }
 
 -(void)showLabelAutolayout:(BOOL)autolayout{
+    
     UILabel *label = [UILabel new];
     label.numberOfLines = 0;
     label.text = @"春花秋月何时了，\n往事知多少,\n小楼昨夜又东风。\n雕栏玉砌应犹在，\n只是朱颜改。\n问君能有几多愁m，\n恰似一江春水向东流。";
@@ -66,13 +69,8 @@
     label.backgroundColor = [UIColor blackColor];
     label.preferredMaxLayoutWidth = 300;
     
-    NView *vv = [NView new];
-    vv.backgroundColor = [UIColor yellowColor];
-    if (!autolayout) {
-        vv.frame = CGRectMake(100, 100, 100, 100);
-    }
+    self.popview.contentView = self.vv;
     
-    self.popview.contentView = vv;
     if (autolayout) {
         self.popview.useAutoLayout = YES;
         self.popview.layoutPositon = PKAutoLayoutPosition_right|PKAutoLayoutPosition_top|PKAutoLayoutPosition_bottom ;
@@ -94,8 +92,8 @@
         PKShowPopView *pp = [[PKShowPopView alloc]init];
 //        pp.useAutoLayout = YES;
 //        pp.backColor = [UIColor blackColor];
-//        pp.showAnimationStyle = PKShowAnimationStyle_fromBottom;// arc4random_uniform(100)%5;;
-//        pp.hideAnimationStyle = PKHideAnimationStyle_toBottom;//arc4random_uniform(100)%5;
+        pp.showAnimationStyle = PKShowAnimationStyle_fromLeft;// arc4random_uniform(100)%5;;
+        pp.hideAnimationStyle = PKHideAnimationStyle_toRight;//arc4random_uniform(100)%5;
 //        pp.backAlpha = 0.75;
 //        pp.userTouchActionEnable = YES;
 //        pp.enablePanContentViewToHide = YES;

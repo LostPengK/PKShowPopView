@@ -389,18 +389,14 @@
         return;
     }
 
-    static CGFloat startX;
     static CGFloat lastX;
-    static CGFloat startY;
     static CGFloat lastY;
     static CGFloat changeOffsetX;
     static CGFloat changeOffsetY;
     CGPoint touchPoint = [gesture locationInView:gesture.view];
     
     if (gesture.state == UIGestureRecognizerStateBegan){
-        startX = touchPoint.x;
         lastX = touchPoint.x;
-        startY = touchPoint.y;
         lastY = touchPoint.y;
         
         userPaned = YES;
@@ -521,6 +517,8 @@
         [_contentView removeFromSuperview];
         _contentView = nil;
         _contentView = contentView;
+    }else{
+        _contentView.frame = self.contentOriginFrame;
     }
     
     if (_enablePanContentViewToHide) {
